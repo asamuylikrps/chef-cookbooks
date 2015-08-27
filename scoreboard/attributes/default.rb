@@ -1,0 +1,12 @@
+default['apps'] = []
+default['score']['name'] = 'score'
+default['score']['server_name'] = 'score'
+default['score']['server_aliases'] = []
+default['score']['docroot'] = '/var/www/score'
+default['score']['config_dir'] = '/var/www/score/properties'
+default['score']['log_dir'] = '/var/www/score/log'
+default['score']['deploy_repo'] = 'git@github.com:remedypointsolutions/scoreboard.git'
+default['score']['deploy_branch'] = 'HEAD'
+default['score']['db_name'] = 'score'
+default['score']['db_user'] = 'score'
+default['score']['db_pass'] = 'score'

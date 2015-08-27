@@ -1,0 +1,33 @@
+<VirtualHost *:80>
+        ServerName <%= @params[:server_name] %>
+        <% @params[:server_aliases].each do |a| %>ServerAlias <%= "#{a}" %>
+        <% end %>
+
+        DocumentRoot "<%= @params[:docroot] %>/<%= @application_name %>/ui"
+        DirectoryIndex /homepage index.html
+
+        php_value include_path ".:<%= @params[:docroot] %>/<%= @application_name %>/:<%= @params[:docroot] %>/core/"
+        php_value auto_prepend_file context/Context.php
+        php_value error_log "<%= @params[:log_dir] %>/php-error.log"
+
+        ErrorLog <%= @params[:log_dir] %>/error.log
+        CustomLog <%= @params[:log_dir] %>/access.log combined
+
+        Alias /core "<%= @params[:docroot] %>/core/"
+        Alias /forwards "<%= @params[:docroot] %>/core/forwards/"
+        Alias /resources "<%= @params[:docroot] %>/core/resources/"
+
+        AliasMatch ^/pages/(.*) "<%= @params[:docroot] %>/core/forwards/transportDestination.php"
+        AliasMatch ^/services/(.*) "<%= @params[:docroot] %>/core/forwards/transportDestination.php"
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                Allow from all
+        </Directory>
+</VirtualHost>
